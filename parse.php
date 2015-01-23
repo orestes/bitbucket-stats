@@ -1,6 +1,18 @@
 <?php
-$json = file_get_contents('list.json');
-$list = json_decode($json);
+$uri = 'https://bitbucket.org/api/1.0/user/repositories/';
+
+$ch = curl_init($uri);
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_SSL_VERIFYHOST => 0,
+    CURLOPT_SSL_VERIFYPEER => 0,
+    CURLOPT_HTTPHEADER => [
+        'Authorization: Basic '.AUTH_HERE,
+        'X-Target-URI: https://bitbucket.org']
+]);
+
+$response = curl_exec($ch);
+$list = json_decode($response);
 
 $stats = [];
 
