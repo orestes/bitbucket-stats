@@ -1,4 +1,7 @@
 <?php
+$config = file_get_contents('config.json');
+$config = json_decode($config);
+
 $uri = 'https://bitbucket.org/api/1.0/user/repositories/';
 
 $ch = curl_init($uri);
@@ -7,7 +10,7 @@ curl_setopt_array($ch, [
     CURLOPT_SSL_VERIFYHOST => 0,
     CURLOPT_SSL_VERIFYPEER => 0,
     CURLOPT_HTTPHEADER => [
-        'Authorization: Basic '.AUTH_HERE,
+        'Authorization: Basic '.$config->['auth'], // base64_encode("foo:bar")
         'X-Target-URI: https://bitbucket.org']
 ]);
 
